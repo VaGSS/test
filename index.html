@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Negronet – Oferty Internetu</title>
+  <style>
+ .popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-gif {
+  max-width: 80%;
+  max-height: 60%;
+}
+
+.popup-text {
+  font-size: 3rem;
+  font-weight: bold;
+  color: red;
+  text-align: center;
+  margin: 20px 0;
+  animation: blink 0.5s infinite alternate;
+}
+
+@keyframes blink {
+  from { opacity: 1; }
+  to { opacity: 0.5; }
+}
+ * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background-color: #f5f7fa;
+      color: #333;
+      padding: 20px;
+    }
+
+    header {
+      background-color: #004080;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      border-radius: 12px;
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+    }
+
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .plan {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease;
+    }
+
+    .plan:hover {
+      transform: scale(1.02);
+    }
+
+    .plan h2 {
+      color: #004080;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #1a8cff;
+      margin: 10px 0;
+    }
+
+    .features {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 20px;
+    }
+
+    .features li {
+      margin-bottom: 8px;
+    }
+
+    .buy-button {
+      background-color: #1a8cff;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.2s ease;
+    }
+
+    .buy-button:hover {
+      background-color: #006dcc;
+    }
+
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      color: #888;
+      font-size: 0.9rem;
+    }
+  
+    @keyframes pulse {
+      0% { text-shadow: 0 0 5px hotpink; }
+      100% { text-shadow: 0 0 20px hotpink; }
+    }
+
+    /* Styl dla podstron ofert */
+    .offer-page {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    .offer-page img {
+      max-width: 100%;
+      border-radius: 12px;
+      margin: 20px 0;
+    }
+
+    .back-button {
+      background-color: #004080;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="main-page">
+    <header>
+      <h1>Negronet – Internet dla Ciebie</h1>
+      <p>Wybierz idealny plan i zacznij korzystać już dziś!</p>
+    </header>
+
+    <section class="plans">
+      <div class="plan" style="border: 2px solid hotpink;">
+        <h2 style="color: hotpink; animation: pulse 1s infinite alternate">Stały klient NegroNet</h2>
+        <p class="price">Dla naszych wiernych</p>
+        <ul class="features">
+          <li>(nie)Stałe łącze</li>
+          <li>min.130kb/s maks.150b/s!!!</li>
+        </ul>
+        <button class="buy-button" onclick="showOffer('offer1')">Kup teraz</button>
+      </div>
+
+      <div class="plan" style="border: 2px solid gold;">
+        <h2 style="color: gold; animation: pulse 1s infinite alternate">SzybkiNegrus</h2>
+        <p class="price">Ultra szybki</p>
+        <ul class="features">
+          <li>4.20 Mb/s</li>
+          <li>Ping 69ms (w warszawie)</li>
+        </ul>
+        <button class="buy-button" onclick="showOffer('offer2')">Kup teraz</button>
+      </div>
+
+      <div class="plan" style="border: 2px solid crimson;">
+        <h2 style="color: crimson; animation: pulse 1s infinite alternate">Gyatroxx the gyat ender</h2>
+        <p class="price">🔥 Potężny pakiet</p>
+        <ul class="features">
+          <li>Unlimited gyat</li>
+          <li>Zrywa spodnie</li>
+        </ul>
+        <button class="buy-button" onclick="showOffer('offer3')">Kup teraz</button>
+      </div>
+
+      <div class="plan" style="border: 2px solid gold;">
+        <h2 style="color: gold; animation: pulse 1s infinite alternate">Negrofarmer</h2>
+        <p class="price">Wiejska siła</p>
+        <ul class="features">
+          <li>Traktor LTE</li>
+          <li>Sygnał z pola</li>
+        </ul>
+        <button class="buy-button" onclick="showOffer('offer4')">Kup teraz</button>
+      </div>
+
+      <div class="plan" style="border: 2px solid gold;">
+        <h2 style="color: gold; animation: pulse 1s infinite alternate">FAMILIA 🍕</h2>
+        <p class="price">Dla całej rodziny</p>
+        <ul class="features">
+          <li>10 urządzeń</li>
+          <li>Pizza w pakiecie (obrazek symboliczny)</li>
+        </ul>
+        <button class="buy-button" onclick="showOffer('offer5')">Kup teraz</button>
+      </div>
+
+      <div class="plan" style="border: 2px solid gray;">
+        <h2 style="color: gray; animation: pulse 1s infinite alternate">miśka bita</h2>
+        <p class="price">ręka sama się podnosi</p>
+        <ul class="features">
+          <li>Stabilne łącze</li>
+          <li>Tonacja minorowa</li>
+        </ul>
+        <button class="buy-button" onclick="showOffer('offer6')">Kup teraz</button>
+      </div>
+
+      <div class="plan" style="border: 2px solid red;">
+        <h2 style="color: red; animation: pulse 1s infinite alternate">CWELuch</h2>
+        <p class="price">ulubiony pakiet KONDONA16</p>
+        <ul class="features">
+          <li>Firewall OFF (gaz ON)</li>
+          <li>Nie odpowiadamy za skutki</li>
+        </ul>
+        <button class="buy-button" onclick="showOffer('offer7')">Kup teraz</button>
+      </div>
+
+      <div class="plan" style="border: 2px solid red;">
+        <h2 style="color: red; animation: pulse 1s infinite alternate">Eskortka</h2>
+        <p class="price">delikatne połączenia</p>
+        <ul class="features">
+          <li>Pakiet nocny</li>
+          <li>Anonimowe IP</li>
+        </ul>
+        <button class="buy-button" onclick="showOffer('offer8')">Kup teraz</button>
+      </div>
+
+      <div class="plan" style="border: 2px solid red;">
+        <h2 style="color: red; animation: pulse 1s infinite alternate">lekkie obyczaje</h2>
+        <p class="price">luźne limity</p>
+        <ul class="features">
+          <li>Bez cenzury</li>
+          <li>Otwarte porty</li>
+        </ul>
+        <button class="buy-button" onclick="showOffer('offer9')">Kup teraz</button>
+      </div>
+
+      <div class="plan" style="border: 2px solid dodgerblue;">
+        <h2 style="color: dodgerblue; animation: pulse 1s infinite alternate">DŻWINKS</h2>
+        <p class="price">grube pakiety</p>
+        <ul class="features">
+          <li>Przepustowość premium</li>
+          <li>altka z wąsem dla klienta</li>
+        </ul>
+        <button class="buy-button" onclick="showOffer('offer10')">Kup teraz</button>
+      </div>
+
+      <div class="plan" style="border: 2px solid #5f9ea0;">
+        <h2 style="color: #5f9ea0; animation: pulse 1s infinite alternate">kondon</h2>
+        <p class="price">ochrona danych</p>
+        <ul class="features">
+          <li>99% skuteczności</li>
+          <li>Bez wycieków</li>
+        </ul>
+        <button class="buy-button" onclick="showOffer('offer11')">Kup teraz</button>
+      </div>
+
+      <div class="plan" style="border: 2px solid magenta;">
+        <h2 style="color: magenta; animation: pulse 1s infinite alternate;">Negrofiz</h2>
+        <p class="price">fusion style</p>
+        <ul class="features">
+          <li>5G + światłoWÓD</li>
+          <li>sponsor > mrożon</li>
+        </ul>
+        <button class="buy-button" onclick="showOffer('offer12')">Kup teraz</button>
+      </div>
+    </section>
+    <section style="margin-top: 40px; text-align: center;">
+      <button class="buy-button" onclick="checkInternet()" style="background-color: red;">Sprawdź internet</button>
+    </section>
+    <section style="margin-top: 40px; text-align: center;">
+      <h2 style="font-size: 1.5rem; margin-bottom: 16px; animation: pulse 1s infinite alternate">Nasza siedziba</h2>
+      <p style="margin-bottom: 12px;">Odwiedź nas w naszej lokalizacji!</p>
+      <a href="https://maps.app.goo.gl/NniNDw9SkimJaxDo7" target="_blank">
+        <button class="buy-button">Nasza siedziba</button>
+      </a>
+    </section>
+
+    <section style="margin-top: 40px; text-align: center;">
+      <h2 style="font-size: 1.5rem; margin-bottom: 16px; animation: pulse 1s infinite alternate">Skontaktuj się z nami</h2>
+      <p style="margin-bottom: 12px;">Masz pytania? Przejdź do strony kontaktowej.</p>
+      <a href="https://sztywne-gity.pl/?period=week" target="_blank">
+        <button class="buy-button">Kontakt</button>
+      </a>
+    </section>
+
+    <footer>
+      &copy; 2025 Negronet. Wszelkie prawa zastrzeżone.
+    </footer>
+  </div>
+
+  <!-- Podstrony ofert -->
+  <div id="offer1" class="offer-page hidden">
+    <h2 style="color: hotpink;">Stały klient NegroNet</h2>
+    <img src="https://cdn.discordapp.com/attachments/1398761027625156698/1398794758796873788/bounce.gif?ex=68875162&is=6885ffe2&hm=b1cce8f527f1a7986c8aa3f5cf6fd976c7a05578bc09192cc2f9ec5db5e245b3&" alt="Stały klient" loop>
+    <p class="price">Dla naszych wiernych</p>
+    <ul class="features">
+      <li>(Nie)Stałe łącze</li>
+      <li>brak Szacunku społecznego</li>
+      <li>Bonusy lojalnościowe (+200% za następny miesiąc)</li>
+      <li>Pierwszeństwo w kolejce (po darmowe wiadro internetu w nigerii)</li>
+    </ul>
+    <p>Dołącz do elitarnego grona naszych stałych klientów i ciesz się śmierdzącymi korzyściami!</p>
+    <button class="back-button" onclick="hideOffer()">Powrót</button>
+</div>
+
+  <div id="offer2" class="offer-page hidden">
+    <h2 style="color: gold;">SzybkiNegrus</h2>
+    <img src="https://i.imgur.com/95SrpeA.jpeg" alt="SzybkiNegrus">
+    <p class="price">szypko ihuj</p>
+    <ul class="features">
+      <li>4.20 Mb/s</li>
+      <li>Ping 69</li>
+      <li>Bez limitów (po wykorzystaniu jednego patcha do ligi lub 1 zdjecia komody16)</li>
+      <li>Gwarancja prędkości</li>
+    </ul>
+    <p>polonez szybszy niz komoda gdy promka na picke 1+1 lodos gratis</p>
+    <button class="back-button" onclick="hideOffer()">Powrót</button>
+  </div>
+
+  <div id="offer3" class="offer-page hidden">
+    <h2 style="color: crimson;">Gyatroxx the gyat ender</h2>
+    <img src="https://c.tenor.com/59sJ5iq9VnMAAAAd/tenor.gif" alt="Gyatroxx">
+    <p class="price">🔥 Potężny pakiet</p>
+    <ul class="features">
+      <li>Unlimited gyat</li>
+      <li>Zrywa spodnie</li>
+      <li>Moc 6969</li>
+      <li>anty atakom dildos na kąkuter</li>
+    </ul>
+    <p>Pakiet tak mocny, że może złamać spodnie. Używaj z rozwagą!</p>
+    <button class="back-button" onclick="hideOffer()">Powrót</button>
+  </div>
+
+  <div id="offer4" class="offer-page hidden">
+    <h2 style="color: gold;">Negrofarmer</h2>
+    <img src="https://scontent-waw2-2.xx.fbcdn.net/v/t39.30808-6/463747575_8688815741139588_8891790690110305152_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=cf85f3&_nc_ohc=Uk2FS07ve8sQ7kNvwFJtpUV&_nc_oc=AdkQB1yqmfYGkqK-s2iRAecm0jWxqCPin2r9NHwBqmnJO0Pjq7dK4e5U2HVQho05P9I&_nc_zt=23&_nc_ht=scontent-waw2-2.xx&_nc_gid=PSVHWfmpmM4P2yAttcjKvw&oh=00_AfQg4XckkNNRqS59Fqp2hryWmBmwQaSllB-Fc0u0aQvw_w&oe=688C2E3F" alt="Negrofarmer">
+    <p class="price">Wiejska siła</p>
+    <ul class="features">
+      <li>Traktor LTE</li>
+      <li>Sygnał z pola</li>
+      <li>Odporność na warunki</li>
+      <li>Specjalna antena</li>
+    </ul>
+    <p>Internet, który dociera nawet na największe zadupia (nawet waszki). Solidny jak traktor!</p>
+    <button class="back-button" onclick="hideOffer()">Powrót</button>
+  </div>
+
+  <div id="offer5" class="offer-page hidden">
+    <h2 style="color: gold;">FAMILIA 🍕</h2>
+    <img src="https://scontent-waw2-2.xx.fbcdn.net/v/t1.6435-9/78297138_1346398642195761_7096554036316340224_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_ohc=XojQ5NzZmqQQ7kNvwElJVqw&_nc_oc=AdktYZ9RylUgpjLyhyrAj4D_FNhgcdQqAXh3_LCwe8Hxmzvjs4v2fnd6-SSLzCfzC-c&_nc_zt=23&_nc_ht=scontent-waw2-2.xx&_nc_gid=mtEVfWfsCbOpcK5WLH4ocg&oh=00_AfTpv7vXyAjJdN-ZLfz-hCZB5TjOjhjKhLNvHBx448O8_g&oe=68ADD54D" alt="Familia">
+    <p class="price">Dla całej rodziny</p>
+    <ul class="features">
+      <li>10 urządzeń</li>
+      <li>Pizza w pakiecie</li>
+      <li>Kontrola rodzicielska</li>
+      <li>Zniżki dla dzieci</li>
+    </ul>
+    <p>Pakiet, który zjednoczy Twoją rodzinę... przynajmniej w sieci!</p>
+    <button class="back-button" onclick="hideOffer()">Powrót</button>
+  </div>
+
+  <div id="offer6" class="offer-page hidden">
+    <h2 style="color: gray;">miśka bita</h2>
+    <img src="https://wykop.pl/cdn/c3201142/a17d8f59be8c9b7297f9f38a6ec5e7d61cacb20849cc9e2134f9ee6be849e561.jpg" alt="Miśka bita">
+    <p class="price">ręka sama się podnosi</p>
+    <ul class="features">
+      <li>Stabilne łącze piąstkowo miśkowa</li>
+      <li>Tonacja minorowa</li>
+      <li>Smutne playlisty</li>
+      <li>Połączenie z duszą</li>
+    </ul>
+    <p>Dla tych, którzy rozumieją, że miśka też może mieć nastrój...</p>
+    <button class="back-button" onclick="hideOffer()">Powrót</button>
+  </div>
+
+  <div id="offer7" class="offer-page hidden">
+    <h2 style="color: red;">CWELuch</h2>
+    <img src="https://samequizy.pl/wp-content/uploads/2021/11/29/images_33c1a9964e6e.jpg" alt="CWELuch">
+    <p class="price">dla ludzi pokroju polewa</p>
+    <ul class="features">
+      <li>Firewall OFF</li>
+      <li>Nie odpowiadamy za skutki</li>
+      <li>Dostęp do darknetu</li>
+      <li>Anonimowość</li>
+    </ul>
+    <p>Używaj na własną odpowiedzialność!</p>
+    <button class="back-button" onclick="hideOffer()">Powrót</button>
+  </div>
+
+  <div id="offer8" class="offer-page hidden">
+    <h2 style="color: red;">Eskortka</h2>
+    <img src="https://cdn.discordapp.com/attachments/1345736072243581021/1399069799698534461/Zrzut_ekranu_2025-06-08_180152.png?ex=6887a8c9&is=68865749&hm=9fd842ebf339ba85092a18b1849d966232de1058ad43d369082ab7960199c4b1&" alt="Eskortka">
+    <img src="https://cdn.discordapp.com/attachments/1345736072243581021/1399068740670197860/image.png?ex=6887a7cd&is=6886564d&hm=65e904f38da101d75fa4bc6a7d3b70605cdb8eee5192a3eb40d63b29ac97403c&" alt="Eskortka">
+    <p class="price">delikatne połączenia</p>
+    <ul class="features">
+      <li>Pakiet nocny</li>
+      <li>Anonimowe IP</li>
+      <li>Szyfrowanie</li>
+      <li>Historia przeglądania znika</li>
+    </ul>
+    <p>Dyskretny pakiet dla wymagających klientów. Twoje sekrety są u nas bezpieczne.</p>
+    <button class="back-button" onclick="hideOffer()">Powrót</button>
+  </div>
+
+  <div id="offer9" class="offer-page hidden">
+    <h2 style="color: red;">lekkie obyczaje</h2>
+    <img src="https://preview.redd.it/k-da-x-renekton-by-sonwooang-v0-twtqw10xujxc1.jpg?width=1080&crop=smart&auto=webp&s=d4f3297a8f8fa5e72086e1aca46a8906f10ba90e" alt="Lekkie obyczaje">
+    <p class="price">luźne limity</p>
+    <ul class="features">
+      <li>Bez cenzury</li>
+      <li>Otwarte porty</li>
+      <li>Nieograniczone pobieranie</li>
+      <li>Wszystkie strony dostępne</li>
+    </ul>
+    <p>Internet bez ograniczeń i zahamowań. Tylko dla dorosłych!</p>
+    <button class="back-button" onclick="hideOffer()">Powrót</button>
+  </div>
+
+  <div id="offer10" class="offer-page hidden">
+    <h2 style="color: dodgerblue;">DŻWINKS</h2>
+    <img src="https://images.steamusercontent.com/ugc/852730565665115902/1F8A894A1CB6884268343374F9864B34BF6E05AB/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false" alt="DŻWINKS">
+    <p class="price">głębokie pakiety</p>
+    <ul class="features">
+      <li>Przepustowość premium</li>
+      <li>Konwerter bitów</li>
+      <li>Technologia kwantowa</li>
+      <li>Dostęp do przyszłości</li>
+    </ul>
+    <p>Pakiet tak zaawansowany, że prawie magiczny. Dla prawdziwych tech-enthusiastów!</p>
+    <button class="back-button" onclick="hideOffer()">Powrót</button>
+  </div>
+
+  <div id="offer11" class="offer-page hidden">
+    <h2 style="color: #5f9ea0;">kondon</h2>
+    <img src="https://cdn.discordapp.com/attachments/1398761027625156698/1399070575179071538/81OnvwH.png?ex=6887a982&is=68865802&hm=42051cb7a247a4646ecc8e0a3d152e6f579468992a886b972c7013c1936a2e5e&" alt="Kondon">
+    <p class="price">ochrona danych</p>
+    <ul class="features">
+      <li>99% skuteczności</li>
+      <li>Bez wycieków</li>
+      <li>Antywirus</li>
+      <li>Firewall</li>
+    </ul>
+    <p>Najlepsza ochrona Twoich danych. Bezpieczeństwo na pierwszym miejscu!</p>
+    <button class="back-button" onclick="hideOffer()">Powrót</button>
+  </div>
+
+  <div id="offer12" class="offer-page hidden">
+    <h2 style="color: magenta;">Negrofiz</h2>
+    <img src="https://cdn.discordapp.com/attachments/1398761027625156698/1399071318036709496/BBs9FTw.png?ex=6887aa33&is=688658b3&hm=0ad58a9754dad853277cb7db7a8146ab6826957387da9e768c616993a072f712&" alt="Negrofiz">
+    <p class="price">fusion style</p>
+    <ul class="features">
+      <li>5G + światłoWÓD</li>
+      <li>sponsor > mrożon</li>
+      <li>Mistyczne częstotliwości</li>
+      <li>Dostęp do innych wud</li>
+    </ul>
+    <p>Połączenie technologii i wody.</p>
+    <button class="back-button" onclick="hideOffer()">Powrót</button>
+  </div>
+
+  <script>
+function checkInternet() {
+  // Tworzenie overlay
+  const overlay = document.createElement('div');
+  overlay.className = 'popup-overlay';
+  
+  // Pierwszy etap - GIF i pierwszy napis
+  const gif = document.createElement('img');
+  gif.src = 'https://c.tenor.com/7WL97PwHcLAAAAAd/tenor.gif';
+  gif.className = 'popup-gif';
+  
+  const text1 = document.createElement('div');
+  text1.className = 'popup-text';
+  text1.textContent = 'TO MOŻE BYĆ TWÓJ NET CZARNUCHU';
+  
+  overlay.appendChild(gif);
+  overlay.appendChild(text1);
+  document.body.appendChild(overlay);
+  
+  // Drugi etap po 5 sekundach
+  setTimeout(() => {
+    overlay.innerHTML = ''; // Czyścimy zawartość
+    
+    const image = document.createElement('img');
+    image.src = 'https://cdn.discordapp.com/attachments/693577937378738283/1398006132718702723/image.png?ex=688715eb&is=6885c46b&hm=59c13522f4aa8d24d9eb0288673000897e90e69712c961469b7937875b7d14ce&';
+    image.className = 'popup-gif';
+    
+    const text2 = document.createElement('div');
+    text2.className = 'popup-text';
+    text2.textContent = 'ALE TO TWÓJ INTERNET CIECIU!!!';
+    
+    overlay.appendChild(image);
+    overlay.appendChild(text2);
+    
+    // Zamknięcie po kolejnych 5 sekundach
+    setTimeout(() => {
+      document.body.removeChild(overlay);
+    }, 5000);
+  }, 5000);
+}
+    function showOffer(offerId) {
+      document.getElementById('main-page').classList.add('hidden');
+      document.getElementById(offerId).classList.remove('hidden');
+    }
+
+    function hideOffer() {
+      document.querySelectorAll('.offer-page').forEach(offer => {
+        offer.classList.add('hidden');
+      });
+      document.getElementById('main-page').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
